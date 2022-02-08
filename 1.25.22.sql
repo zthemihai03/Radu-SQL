@@ -234,4 +234,11 @@ from Angajati as a
 	inner join departamente as d on a.idDept=d.idDept
     inner join Functii as f on a.idFunctie=f.idFunctie
 	where nume='Danilov'
+	--Cautati persoana cu numele “Danilov” si afisati datele acesteia
+select Nume, Prenume, Birou, Stagiu,DenFunctie,Salariu,Dept, Adresa, Oras
+from Angajati as a 
+	inner join departamente as d on a.idDept=d.idDept
+    inner join Functii as f on a.idFunctie=f.idFunctie
+	where nume='Danilov'
+	
 	
