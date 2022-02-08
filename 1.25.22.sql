@@ -15,7 +15,7 @@ CREATE TABLE Functii
 (
     idFunctie int PRIMARY KEY identity(1,1)
    ,DenFunctie varchar(20)
-   ,Salariu smallint
+   ,Salariu smallint --clasa de salarizare
 )
 CREATE TABLE Angajati
 (
@@ -23,7 +23,7 @@ CREATE TABLE Angajati
     ,Nume varchar(15)
     ,Prenume varchar(15)
     ,Birou smallint           --nr biroului
-    ,Stagiu smallint         --clasa de salarizare
+    ,Stagiu smallint         
     ,idDept int--foreign key
     ,idFunctie int
 )
@@ -45,30 +45,31 @@ VALUES ( 'Administratie', 'Independentei', 'Iasi')
 INSERT INTO Angajati( Nume, Prenume, Birou, Stagiu, idDept,idFunctie)
 VALUES ( 'Ionescu', 'Maria', 10, 1, 1,2)
       ,( 'Popescu', 'Ion', 20, 15, 2,5)
-      ,( 'Danilov', 'Stefan', 20, 20, 1,7)
-      ,( 'Dumitrescu', 'Vasile', 16, 20, 3,8)
-      ,( 'Ionescu', 'Ion', 14, 7, 4,10)
-      ,( 'Manole', 'Radu', 7, 0, 4,6)
+      ,( 'Danilov', 'Stefan', 20, 26, 1,7)
+      ,( 'Dumitrescu', 'Vasile', 16, 26, 3,8)
+      ,( 'Ionescu', 'Ion', 14, 40, 4,10)
+      ,( 'Manole', 'Radu', 7, 30, 4,6)
       ,( 'Luca', 'Doru', 75, 5, 1,7)
       ,( 'Vasile', 'Alina', 20, 3, 2,11)
-	  
+	  select *from Angajati
+
 	  /* Inserați în câmpul DenFuncție valorile: manager, asistent
 	  manager, contabil, contabil șef, operator, administrator BD, 
 	  technician de site-uri WEB, programator, 
 	  tehnician rețelistică, technician securitate, tester)*/
 INSERT INTO Functii (DenFunctie,Salariu)
 VALUES
-	   ('Manager',3000)
-	  ,('Asistent Manager',4000)
-	  ,('Contabil',2000)
-	  ,('Contabil Sef',5000)
-	  ,('Operator',2500)
-	  ,('Administrator BD',7000)
-	  ,('Tehnician Web',9000)
-	  ,('Programator',11000)
-	  ,('Tehnician Realistica',11000)
-	  ,('Tehnician Securitate',2000)
-	  ,('Tester',14000)
+	   ('Manager',300)
+	  ,('Asistent Manager',400)
+	  ,('Contabil',20)
+	  ,('Contabil Sef',50)
+	  ,('Operator',25)
+	  ,('Administrator BD',7)
+	  ,('Tehnician Web',9)
+	  ,('Programator',16)
+	  ,('Tehnician Realistica',11)
+	  ,('Tehnician Securitate',2)
+	  ,('Tester',14)
 	  SELECT *FROM Functii
   
 	  /*SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
@@ -234,11 +235,26 @@ from Angajati as a
 	inner join departamente as d on a.idDept=d.idDept
     inner join Functii as f on a.idFunctie=f.idFunctie
 	where nume='Danilov'
-	--Cautati persoana cu numele “Danilov” si afisati datele acesteia
-select Nume, Prenume, Birou, Stagiu,DenFunctie,Salariu,Dept, Adresa, Oras
-from Angajati as a 
-	inner join departamente as d on a.idDept=d.idDept
-    inner join Functii as f on a.idFunctie=f.idFunctie
-	where nume='Danilov'
-	
-	
+
+	--Ordonați ASCENDING datele cu referire
+	--la angajați, conform functiei detinute
+
+select Nume,Prenume,denFunctie
+from Angajati as a
+inner join Functii as f on f.idFunctie=a.idFunctie
+order by DenFunctie asc
+-- Afisati persoanele care au o vechime 
+--in munca mai mare de 25 ani
+select Nume,Prenume,Stagiu
+-- >25
+from Angajati a
+where Stagiu>25
+--Afisati angajatii cu clasa de salarizare intre
+--15 si 55 din departamentul 2
+select Nume,Prenume,Salariu,Dept
+from Angajati as a
+inner join Functii f on f.idFunctie=a.idFunctie
+inner join Departamente d on d.Dept=a.idDept
+where  Salariu between 2500 and 9000
+where d.idDept=2
+--iddept=2
